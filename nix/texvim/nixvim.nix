@@ -40,7 +40,7 @@ pkgs: let
     # Start scrolling when the cursor is X lines away from the top/bottom
     scrolloff = 5;
 
-    conceallevel = 1;
+    conceallevel = 2;
   };
 in {
   inherit opts;
@@ -79,9 +79,21 @@ in {
     lualine.enable = true;
     treesitter = {
       enable = true;
-      settings.highlight.enable = true;
+      settings.highlight.enable = false;
     };
-    luasnip.enable = true;
+    luasnip = {
+      enable = true;
+      fromLua = [
+        {
+          paths = ./tex.snippets;
+          include = [ "tex" ];
+        }
+        {
+          paths = ./snippets.snippets;
+          include = [ "snippets" ];
+        }
+      ];
+    };
     comment = {
       enable = true;
       settings.sticky = true;
@@ -131,18 +143,23 @@ in {
       enable = true;
       settings = {
         mapping = {
-          __raw = /* lua */ ''
-            cmp.mapping.preset.insert({
-              ["<C-p>"] = cmp.mapping.select_prev_item(),
-              ["<C-n>"] = cmp.mapping.select_next_item(),
-              -- Add tab support
-              ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-              ["<C-f>"] = cmp.mapping.scroll_docs(4),
-              ["<Tab>"] = cmp.mapping.confirm({
-                behavior = cmp.ConfirmBehavior.Insert,
-                select = true,
-              }),
-            })
+          "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+          "<C-p>" = "cmp.mapping.select_prev_item()";
+          "<C-n>" = "cmp.mapping.select_next_item()";
+          "<CR>" = "cmp.mapping.confirm({ select = true })";
+          "<C-l>" = ''
+            cmp.mapping(function()
+              if luasnip.expand_or_locally_jumpable() then
+                luasnip.expand_or_jump()
+              end
+            end, { 'i', 's' })
+          '';
+          "<C-h>" = ''
+            cmp.mapping(function()
+              if luasnip.locally_jumpable(-1) then
+                luasnip.jump(-1)
+              end
+            end, { 'i', 's' })
           '';
         };
         snippet = {
@@ -150,10 +167,8 @@ in {
         };
         sources = [
           { name = "nvim_lsp"; }
-          # { name = "vsnip"; }
           { name = "luasnip"; }
           { name = "path"; }
-          { name = "buffer"; }
         ];
       };
     };

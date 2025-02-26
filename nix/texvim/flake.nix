@@ -25,10 +25,9 @@
             '';
           };
         in {
+          packages.default = texvim;
           devShells.default = pkgs.mkShell {
             buildInputs = [
-              pkgs.texliveFull
-              pkgs.zathura
               texvim
             ];
           };
