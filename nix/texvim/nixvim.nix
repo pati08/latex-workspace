@@ -85,14 +85,15 @@ in {
       enable = true;
       fromLua = [
         {
-          paths = ./tex.snippets;
-          include = [ "tex" ];
-        }
-        {
-          paths = ./snippets.snippets;
-          include = [ "snippets" ];
+          # paths = ./snippets;
+          paths = "/home/patrick/math/nix/texvim/snippets";
         }
       ];
+      # settings.exit_roots = true;
+      settings = {
+        exit_roots = true;
+        enable_autosnippets = true;
+      };
     };
     comment = {
       enable = true;
@@ -173,6 +174,8 @@ in {
       };
     };
 
+    cmp_luasnip.enable = true;
+
     vimtex = {
       enable = true;
       texlivePackage = pkgs.texliveFull;
@@ -183,7 +186,34 @@ in {
     };
   };
   extraConfigLua = /* lua */ ''
-    -- require("ultimate-autopair").setup({})
+    luasnip = require("luasnip")
+    kind_icons = {
+      Text = "󰊄",
+      Method = "",
+      Function = "󰡱",
+      Constructor = "",
+      Field = "",
+      Variable = "󱀍",
+      Class = "",
+      Interface = "",
+      Module = "󰕳",
+      Property = "",
+      Unit = "",
+      Value = "",
+      Enum = "",
+      Keyword = "",
+      Snippet = "",
+      Color = "",
+      File = "",
+      Reference = "",
+      Folder = "",
+      EnumMember = "",
+      Constant = "",
+      Struct = "",
+      Event = "",
+      Operator = "",
+      TypeParameter = "",
+    }
   '';
 
   extraConfigVim = ''

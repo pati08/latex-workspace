@@ -231,12 +231,12 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-3AqV9leN7ikKMGL7lqi1rkJQdL3zoHtzuZNeplu5R2s=",
-        "path": "/nix/store/a4qr78zjlvd4sdg13h6gk6dfrciyjr24-source/nix/texvim",
+        "narHash": "sha256-6bfqXZS0UxTVdus4pM83ozf+5mtr2MMdPEzvF9v2U6g=",
+        "path": "/nix/store/92r8nqjnz50p88fpcaq30wk5ka2lmqk1-source/nix/texvim",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/a4qr78zjlvd4sdg13h6gk6dfrciyjr24-source/nix/texvim",
+        "path": "/nix/store/92r8nqjnz50p88fpcaq30wk5ka2lmqk1-source/nix/texvim",
         "type": "path"
       }
     }
